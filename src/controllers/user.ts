@@ -37,3 +37,31 @@ export const newUser = TryCatch(
             .json({ success: true, message: `Welcome, ${user.name}`, });
     }
 );
+
+export const getAllUsers = TryCatch(async (req, res, next) => {
+
+    const users = await User.find({});
+
+    return res.status(201).json({ success: true, users });
+});
+
+export const getUser = TryCatch(async (req, res, next) => {
+
+    const id = req.params.id;
+    const users = await User.findById(id);
+    if (!users) return next(new ErrorHandler("Invalid Id", 400));
+
+    return res.status(201).json({ success: true, users });
+});
+
+export const deleteUser = TryCatch(async (req, res, next) => {
+
+    const id = req.params.id;
+    const users = await User.findById(id);
+    
+    if (!users) return next(new ErrorHandler("Invalid Id", 400));
+
+    await users.deleteOne();
+
+    return res.status(200).json({ success: true, message: "User Deleted Successfully", });
+});

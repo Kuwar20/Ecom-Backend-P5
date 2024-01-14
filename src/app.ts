@@ -5,16 +5,9 @@ import { errorMiddleware } from './middlewares/error.js';
 const app = express();
 const port = 3000;
 
-
 app.use(express.json());
 
 connectDB();
-
-/* 
-// test api
-app.get("/", (req, res) => {
-res.send("API is working with /api/v1")
-}) */
 
 app.use("/api/v1/user", userRoute);
 
