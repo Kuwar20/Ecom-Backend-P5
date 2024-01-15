@@ -1,15 +1,22 @@
 import express from 'express';
-import userRoute from './routes/user.js';
 import { connectDB } from './utils/features.js';
 import { errorMiddleware } from './middlewares/error.js';
-const app = express();
-const port = 3000;
 
-app.use(express.json());
+// Importing Routes
+import userRoute from './routes/user.js';
+import productRoute from './routes/products.js';
+
+const port = 3000;
 
 connectDB();
 
+const app = express();
+
+app.use(express.json());
+
+// Using Routes
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/product", productRoute);
 
 app.use(errorMiddleware);
 
