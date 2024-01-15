@@ -51,3 +51,14 @@ export const getAllCategories = TryCatch(
             categories,
         });
     });
+
+    export const getAdminProducts = TryCatch(
+    async (req, res, next) => {
+
+        const products = await Product.find({});
+
+        return res.status(200).json({
+            success: true,
+            products,
+        });
+    });
