@@ -1,7 +1,15 @@
-import express from 'express';
-import { adminOnly } from '../middlewares/auth.js';
-import { getAdminProducts, getAllCategories, getlatestProducts, newProduct } from '../controllers/product.js';
-import { singleUpload } from '../middlewares/multer.js';
+import express from "express";
+import { adminOnly } from "../middlewares/auth.js";
+import {
+    deleteProduct,
+    getAdminProducts,
+    getAllCategories,
+    getSingleProduct,
+    getlatestProducts,
+    newProduct,
+    updateProduct,
+} from "../controllers/product.js";
+import { singleUpload } from "../middlewares/multer.js";
 
 const app = express.Router();
 
@@ -16,5 +24,11 @@ app.get("/categories", getAllCategories);
 
 //To get all Products  /api/v1/product/admin-products
 app.get("/admin-products", getAdminProducts);
+
+app
+    .route("/:id")
+    .get(getSingleProduct)
+    .put(singleUpload, updateProduct)
+    .delete(deleteProduct);
 
 export default app;
