@@ -1,3 +1,4 @@
+import exp from "constants";
 import { NextFunction, Request, Response } from "express";
 
 export interface NewUserRequestBody {
@@ -21,3 +22,23 @@ export type ControllerType = (
     res: Response,
     next: NextFunction
 ) => Promise<void | Response<any, Record<string, any>>>;
+
+
+export type SearchRequestQuery = {
+    search?: string;
+    category?: string;
+    price?: string;
+    sort?: string;
+    page?: string;
+}
+
+export interface BaseQuery {
+    name?: {
+        $regex: string;
+        $options: string;
+    };
+    price?: {
+        $lte: number;
+    };
+    category?: string;
+}
