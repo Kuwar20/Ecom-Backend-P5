@@ -8,6 +8,7 @@ import {
 import { Product } from "../models/product.js";
 import ErrorHandler from "../utils/utility-class.js";
 import { rm } from "fs";
+//import { faker } from '@faker-js/faker';
 
 export const newProduct = TryCatch(
     async (req: Request<{}, {}, NewProductRequestBody>, res, next) => {
@@ -140,9 +141,9 @@ export const getAllProducts = TryCatch(
         if (category) baseQuery.category = String(category);
 
         const productsPromise = Product.find(baseQuery)
-                .sort(sort && { price: sort === "asc" ? 1 : -1 })
-                .limit(limit)
-                .skip(skip);
+            .sort(sort && { price: sort === "asc" ? 1 : -1 })
+            .limit(limit)
+            .skip(skip);
 
         const [products, filteredOnlyProduct] = await Promise.all([
             productsPromise,
@@ -158,3 +159,41 @@ export const getAllProducts = TryCatch(
         });
     }
 );
+
+// const generateRandomProducts = async (count: number = 10) => {
+//     const products = [];
+
+//     for (let i = 0; i < count; i++) {
+//         const product = {
+//             name: faker.commerce.productName(),
+//             photo: "uploads\\7489d84c-554b-4c0d-937a-751a55c7a250.png",
+//             price: faker.commerce.price({ min: 1500, max: 80000, dec: 0 }),
+//             stock: faker.commerce.price({ min: 0, max: 100, dec: 0 }),
+//             category: faker.commerce.department(),
+//             createdAt: new Date(faker.date.past()),
+//             updatedAt: new Date(faker.date.recent()),
+//             __v: 0,
+//         };
+
+//         products.push(product);
+//     }
+
+//     await Product.create(products);
+
+//     console.log({ succecss: true });
+// };
+
+//generateRandomProducts(40);
+
+// const deleteRandomsProducts = async (count: number = 10) => {
+//     const products = await Product.find({}).skip(2);
+
+//     for (let i = 0; i < products.length; i++) {
+//         const product = products[i];
+//         await product.deleteOne();
+//     }
+
+//     console.log({ succecss: true });
+// };
+
+// deleteRandomsProducts(38);
